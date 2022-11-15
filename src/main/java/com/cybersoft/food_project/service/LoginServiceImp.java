@@ -17,7 +17,14 @@ public class LoginServiceImp implements LoginService{
     public boolean checkLogin(String email, String password) {
 
         List<UserEntity> users = userRepository.findByEmailAndPassword(email, password);
-        System.out.println(email + " " + password + " " + users.size());
+        //System.out.println(email + " " + password + " " + users.size());
         return users.size() > 0;
+    }
+
+    @Override
+    public UserEntity checkLogin(String email) {
+        List<UserEntity> users = userRepository.findByEmail(email);
+        //System.out.println(email + " " + users.size());
+        return users.size() > 0 ? users.get(0) : null;
     }
 }
