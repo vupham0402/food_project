@@ -1,5 +1,7 @@
 package com.cybersoft.food_project.security;
 
+import com.cybersoft.food_project.jwt.JwtTokenFilter;
+import com.cybersoft.food_project.jwt.JwtTokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -34,6 +37,9 @@ public class SecSecurityConfig {
 
     @Autowired
     CustomAuthentProvider customAuthentProvider;
+
+    @Autowired
+    JwtTokenFilter jwtTokenFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception{
@@ -57,7 +63,11 @@ public class SecSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/signin/test").authenticated()
+                .antMatchers("/refresh-token").permitAll()
                 .anyRequest().authenticated();
+
+        //Add 2 filter before a filter
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
