@@ -64,6 +64,7 @@ public class SecSecurityConfig {
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/signin/test").authenticated()
                 .antMatchers("/refresh-token").permitAll()
+                .antMatchers("/file/**").permitAll()
                 .anyRequest().authenticated();
 
         //Add 2 filter before a filter
