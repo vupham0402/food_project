@@ -14,3 +14,7 @@ spring:
 server:
   servlet:
     context-path: /api
+#@ConfigurationProperties: Tu map key ben application thanh doi tuong
+#@Value(${tenkey}): lay gia tri key ben application thanh bien
+file:
+  upload-dir: \Users\KenPham\OneDrive - Vision Center Network of America\Desktop\images
